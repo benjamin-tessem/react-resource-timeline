@@ -12,6 +12,7 @@
     "storybook": "storybook dev -p 6006",
     "storybook-docs": "storybook dev --docs -p 6006",
     "build-storybook": "storybook build",
+    "build-docs": "storybook build --docs",
     "test": "NODE_ENV=test jest --coverage"
   },
   "files": [
