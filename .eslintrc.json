@@ -17,6 +17,7 @@
     "sourceType": "module"
   },
   "plugins": ["react", "@typescript-eslint", "prettier"],
+  "ignorePatterns": ["dist/", "node_modules/", ".github/", ".vscode/"],
   "rules": {
     "prettier/prettier": "error"
   }
