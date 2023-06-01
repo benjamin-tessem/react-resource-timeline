@@ -1,0 +1,49 @@
+import { Meta, Story, Canvas } from "@storybook/blocks";
+import * as TimelineStories from "./Timeline.stories.tsx";
+
+<Meta name="Custom Component Libraries" of={TimelineStories} />
+
+# Use Custom Component Libraries
+
+React Resource  allows you to override table components with any component library you want. In this example we are using Material UI.
+
+<Canvas>
+  <Story of={TimelineStories.WithMUI} />
+</Canvas>
+
+```jsx
+...
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow
+} from "@mui/material";
+...
+
+const DemoComponent = () => (
+  <Timeline
+    resources={resources}
+    timelineEvents={timelineItems}
+    resourceConfig={resourceConfig}
+    timelineConfig={timelineConfig}
+    start={DateTime.now().startOf("hour")}
+    end={DateTime.now().startOf("hour").plus({ days: 1 })}
+    title="Resources"
+    tableRowComponent={TableRow} // Pass the function only
+    tableComponent={Table}
+    tableHeadComponent={TableHead}
+    tableBodyComponent={TableBody}
+    tableCellComponent={TableCell}
+    tableHeaderCellComponent={TableCell}
+    tableHeaderCellProps={{
+      component: "th",
+      sx: {
+        backgroundColor: "lightblue",
+        fontSize: "0.75rem"
+      }
+    }} // Optional props passed to the component
+  />
+);
+```

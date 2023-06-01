@@ -1,0 +1,106 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Basic Usage" id="basic-usage" />
+
+# Basic Usage
+
+Using React Resource Timeline should be fairly straight forward.
+Simply provide the resources and timeline events as props, and configure the resource and timeline event objects.
+
+```tsx
+import {
+  Timeline,
+  ResourceConfig,
+  TimelineConfig
+} from "react-resource-timeline";
+
+type ResourceType = {
+  id: string | number;
+  title: string;
+};
+
+type TimelineEventType = {
+  id: string | number;
+  resourceId: string | number;
+  start: string | Date | DateTime;
+  end: string | Date | DateTime;
+  title: string;
+  color?: string;
+};
+
+// Resources can be any Record<string, unknown>[], as long as they have a unique id
+const resources: ResourceType[] = [
+  { id: "a", title: "Room A" },
+  { id: "b", title: "Room B" },
+  { id: 123, title: "Kitchen" }
+];
+
+// Timeline events can be any Record<string, unknown>[], as long as they have a unique id, and a reference to a resourceId
+const timelineEvents: TimelineEventType[] = [
+  {
+    id: 1,
+    resourceId: "a",
+    // Start and End accept Dates, Luxon DateTime, or ISO strings
+    start: DateTime.local().minus({ hours: 3 }),
+    end: DateTime.local().plus({ hours: 1 }),
+    title: "Meeting",
+    color: "yellow"
+  },
+  {
+    id: 2,
+    resourceId: "b",
+    start: DateTime.local(),
+    end: DateTime.local().plus({ minutes: 30 }),
+    title: "Trying out food",
+    color: "pink"
+  },
+  {
+    id: "a-custom-id",
+    resourceId: 123,
+    start: DateTime.local().plus({ hours: 1 }),
+    end: DateTime.local().plus({ hours: 1, minutes: 30 }),
+    title: "Bongus",
+    color: "blue"
+  }
+];
+
+const DemoComponent = () => {
+  // Configure the resources and timeline events
+  const resourceConfig: ResourceConfig<ResourceType> = {
+    // The key to use as a unique identifier for each resource
+    selector: "id",
+    // A function that returns a ReactNode to render in the resource cell
+    renderResourceCell: (resource) => <div>{resource.title}</div>
+  };
+
+  const timelineConfig: TimelineConfig<TimelineEventType> = {
+    // The key used to link a timeline event to a resource
+    resourceId: "resourceId",
+    // The key used to select the start time of a timeline event
+    start: "start",
+    // The key used to select the end time of a timeline event
+    end: "end",
+    // The key used to select the unique id of a timeline event
+    eventId: "id",
+    // A function that returns a ReactNode to render in the timeline event
+    renderEvent: (event) => <div>{event.title}</div>,
+    // Optional function that is called when a timeline event is clicked
+    onClick: (event) => {
+      console.log(event);
+    }
+  };
+
+  return (
+    <Timeline
+      resources={resources}
+      timelineEvents={timelineEvents}
+      resourceConfig={resourceConfig}
+      timelineConfig={timelineConfig}
+      // The start and end props define the range of the timeline, accepts Dates, Luxon DateTime, or ISO strings
+      start={DateTime.now().startOf("hour")}
+      end={DateTime.now().startOf("hour").plus({ days: 1 })}
+      title="Resources"
+    />
+  );
+};
+```

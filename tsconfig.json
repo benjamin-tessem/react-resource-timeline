@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    // "moduleResolution": "bundler",
+    "moduleResolution": "node",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "declaration": true,
+
+    "esModuleInterop": true,
+    "declarationMap": true,
+    "paths": {
+      "react-resource-timeline": ["src/timeline/index.ts"]
+    },
+    "typeRoots": ["node_modules/@types", "src/timeline/index.ts"],
+    /* Linting */
+    "strict": true,
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    "jsxImportSource": "@emotion/react",
+
+    // Base url so we can use absolute imports
+    "baseUrl": "./src"
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
