@@ -1,12 +1,21 @@
 name: Publish new Release
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write # so we can update the package.json version
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # publish a github release
+      issues: write # create a github release
+      pull-requests: write # create a github release
+
     steps:
       # Fetch the latest release tag
       - uses: actions/checkout@v3
@@ -43,8 +52,10 @@ jobs:
       
       - name: Build
         run: pnpm build
-      
-      - name: Publish to NPM
-        run: pnpm publish --access public --no-git-checks # no git checks because we already have a tag
+
+      - name: Create Release
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npx semantic-release
