@@ -51,7 +51,7 @@ const TimelineEventTable = ({ columnSegments }: Props) => {
         zIndex: 2,
         width: timelineWidth,
         overflow: "hidden",
-        borderCollapse: "collapse",
+        borderCollapse: "collapse"
       }}
       {...tableProps}
     >

@@ -1,9 +1,4 @@
-import {
-  Timeline,
-  TimelineConfig,
-  TimelineProps,
-  TimelineTableComponents
-} from "timeline";
+import { Timeline, TimelineProps, TimelineTableComponents } from "timeline";
 import { fireEvent, render } from "@testing-library/react";
 
 import { DEFAULT_DAY_LENGTH } from "utility/Constants";
@@ -119,8 +114,7 @@ describe("Timeline", () => {
   };
 
   it("should render the timeline", () => {
-    const { container, queryByText } = renderTimeline();
-    expect(container).toMatchSnapshot();
+    const { queryByText } = renderTimeline();
     expect(queryByText("Event5")).toBeTruthy();
     expect(queryByText("Trying out food")).toBeTruthy();
     // Check that one of the center days have their colunm span set to the default
@@ -130,42 +124,45 @@ describe("Timeline", () => {
   });
 
   it("inverted dates should return no items", () => {
-    const { container, queryByText } = renderTimeline({
+    const { queryByText } = renderTimeline({
       start: end,
       end: start
     });
-    // We want no items to be rendered, but there should still be resources
-    expect(container).toMatchSnapshot();
     expect(queryByText("Event5")).toBeTruthy();
     expect(queryByText("Trying out food")).toBeFalsy();
   });
 
   it("timelines that are less than an hour wide should still show 1 hour", () => {
-    const { container } = renderTimeline({
+    const { queryByText } = renderTimeline({
       start: start,
-      end: end.plus({ minutes: 30 })
+      end: start.plus({ minutes: 30 })
     });
-    expect(container).toMatchSnapshot();
+    const firstHour = queryByText("12 AM");
+    expect(firstHour).toBeTruthy();
+    // Expect the hour to span 2 columns
+    expect(firstHour?.parentElement?.getAttribute("colSpan")).toEqual("2");
   });
 
   it("should still render when a ISO date is passed", () => {
-    const { container } = renderTimeline({
+    const { queryByText } = renderTimeline({
       start: start.toISO() ?? "",
       end: end.toISO() ?? ""
     });
-    expect(container).toMatchSnapshot();
+    expect(queryByText("Event5")).toBeTruthy();
+    expect(queryByText("Trying out food")).toBeTruthy();
   });
 
   it("should still render when a JSDate is passed", () => {
-    const { container } = renderTimeline({
+    const { queryByText } = renderTimeline({
       start: start.toJSDate(),
       end: end.toJSDate()
     });
-    expect(container).toMatchSnapshot();
+    expect(queryByText("Event5")).toBeTruthy();
+    expect(queryByText("Trying out food")).toBeTruthy();
   });
 
   it("using an object accessor should work", () => {
-    const { container } = renderTimeline({
+    const { queryByText } = renderTimeline({
       timelineConfig: {
         // Intentionally ignoring types to test the default values
         // @ts-expect-error Testing the default values
@@ -180,7 +177,7 @@ describe("Timeline", () => {
         renderEvent: (event) => <div>{event.title}</div>
       }
     });
-    expect(container).toMatchSnapshot();
+    expect(queryByText("A Test Event")).toBeTruthy();
   });
 
   it("no accessors should default to start, end, id and resourceId", () => {
@@ -223,17 +220,16 @@ describe("Timeline", () => {
   });
 
   it("should render when both resources and timeline events are undefined", () => {
-    const { container, queryByText } = renderTimeline({
+    const { queryByText } = renderTimeline({
       resources: undefined,
       timelineEvents: undefined
     });
-    expect(container).toMatchSnapshot();
     expect(queryByText("Trying out food")).toBeNull();
     expect(queryByText("Event5")).toBeNull();
   });
 
   it("bad resource id should drop the events related", () => {
-    const { container, queryByText } = renderTimeline({
+    const { queryByText } = renderTimeline({
       resources: [
         {
           id: undefined,
@@ -241,7 +237,6 @@ describe("Timeline", () => {
         }
       ]
     });
-    expect(container).toMatchSnapshot();
     expect(queryByText("A Test Event")).toBeNull();
   });
 

@@ -14,7 +14,7 @@ export const TableComponentsContext = createContext<TimelineComponents>({
   TableCell: "td",
   tableCellProps: {},
   TableBody: "tbody",
-  tableBodyProps: {},
+  tableBodyProps: {}
 });
 
 export const useTableComponents = () => useContext(TableComponentsContext);
