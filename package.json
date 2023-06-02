@@ -1,9 +1,29 @@
 {
   "name": "react-resource-timeline",
   "private": false,
-  "version": "0.1.0",
+  "version": "1.0.0",
   "type": "module",
   "license": "MIT",
+  "author": "benjamin-tessem",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/benjamin-tessem/react-resource-timeline"
+  },
+  "bugs": {
+    "url": "https://github.com/benjamin-tessem/react-resource-timeline/issues"
+  },
+  "keywords": [
+    "react",
+    "timeline",
+    "resource",
+    "calendar",
+    "schedule",
+    "booking",
+    "booking system",
+    "booking calendar",
+    "react component"
+  ],
+  "homepage": "https://react-resource-timeline.tessem.dev",
   "scripts": {
     "dev": "vite",
     "dev-build": "nodemon --watch src --exec \"npm run build\"",
