@@ -1,8 +1,9 @@
 {
   "name": "react-resource-timeline",
-  "private": true,
-  "version": "0.0.0",
+  "private": false,
+  "version": "0.1.0",
   "type": "module",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "dev-build": "nodemon --watch src --exec \"npm run build\"",
@@ -13,7 +14,8 @@
     "storybook-docs": "storybook dev --docs -p 6006",
     "build-storybook": "storybook build",
     "build-docs": "storybook build --docs",
-    "test": "NODE_ENV=test jest --coverage"
+    "test": "NODE_ENV=test jest",
+    "test:coverage": "NODE_ENV=test jest --coverage"
   },
   "files": [
     "dist"
